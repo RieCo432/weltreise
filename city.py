@@ -1,4 +1,6 @@
 from copy import deepcopy
+from path import Path
+
 
 class City:
 
@@ -24,16 +26,30 @@ class City:
         return adjacent_cities
 
     def get_possible_destinations(self, number_of_moves):
-        possible_destinations = [self]
-        all_visited = [self]
+
+        new_paths = [Path([self])]
         for i in range(number_of_moves):
-            intermediates = deepcopy(possible_destinations)
-            possible_destinations = []
-            for city in intermediates:
-                for c in city.get_adjacent_cities():
-                    if c not in all_visited:
-                        possible_destinations.append(c)
-                        all_visited.append(c)
+            paths = deepcopy(new_paths)
+            new_paths = []
+            for path in paths:
+                last_city = path.cities_in_order[-1]
+                possible_next_cities = last_city.get_adjacent_cities()
+                for c in possible_next_cities:
+                    new_path_cities = deepcopy(path.cities_in_order)
+                    new_path_cities.append(c)
+                    new_paths.append(Path(new_path_cities))
+
+        valid_paths = []
+
+        for path in new_paths:
+            if path.is_valid:
+                valid_paths.append(path)
+
+        possible_destinations = []
+
+        for path in valid_paths:
+            if path.cities_in_order[-1] not in possible_destinations:
+                possible_destinations.append(path.cities_in_order[-1])
 
         return possible_destinations
 

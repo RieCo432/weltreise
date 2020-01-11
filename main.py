@@ -1,6 +1,8 @@
 from city import City
 from connection import Connection
 from game import Game
+from path import Path
+
 
 if __name__ == "__main__":
     
@@ -322,9 +324,24 @@ if __name__ == "__main__":
 
     print("Done setup")
 
-    results = game.get_city_by_name("LosAngeles").get_adjacent_cities()
+    # results = game.get_city_by_name("LosAngeles").get_adjacent_cities()
+    #
+    # result = game.get_city_by_name("LosAngeles").get_possible_destinations(3)
+    #
+    # la = game.get_city_by_name("LosAngeles")
+    # sf = game.get_city_by_name("SanFrancisco")
+    # slc = game.get_city_by_name("Saltlakecity")
+    # mc = game.get_city_by_name("MexikoCity")
+    # ep = game.get_city_by_name("ElPaso")
+    # p1 = Path([la, sf, la])  # not valid
+    # p2 = Path([la, sf, slc, la])  # valid
+    # p3 = Path([sf, la, mc, ep, slc])  # valid
+    # p4 = Path([sf, la, mc, la, slc])  # not valid
+    # print(p1.is_valid())
+    # print(p2.is_valid())
+    # print(p3.is_valid())
+    # print(p4.is_valid())
 
-    result = game.get_city_by_name("LosAngeles").get_possible_destinations(3)
 
     print("Test concluded")
 
