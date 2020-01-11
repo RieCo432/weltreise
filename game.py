@@ -1,3 +1,5 @@
+from connection import Connection
+
 class Game:
 
     def __init__(self):
@@ -10,3 +12,52 @@ class Game:
         self.special_card_trade_remaining = 5
         self.players = []
         self.grey_cities = []
+
+    def get_city_by_name(self, name):
+
+        for city in self.all_cities:
+            if city.name.lower() == name.lower():
+                return city
+
+        return None
+
+    def get_cities_by_coordinate(self, x=None, y=None):
+
+        result = []
+        for city in self.all_cities:
+            if (city.x == x.lower() or x is None) and (city.y == y.lower() or y is None):
+                result.append(city)
+
+        return result
+
+
+    def add_connection(self, cities, isFlight=False):
+
+        print(cities)
+        city1 = self.get_city_by_name(cities[0])
+        city2 = self.get_city_by_name(cities[1])
+
+        if city1.name >= city2.name:
+            connshort = city2.name + city1.name
+        else:
+            connshort = city1.name + city2.name
+
+        connecion_already_exists = False
+
+        for exist_conn in self.all_connections:
+            conn_city1, conn_city2 = exist_conn.cities
+            if conn_city1.name >= conn_city2.name:
+                exist_connshort = conn_city2.name + conn_city1.name
+            else:
+                exist_connshort = conn_city1.name + conn_city2.name
+
+            if exist_connshort == connshort:
+                print("double connection, ignoring")
+                connecion_already_exists = True
+
+        if not connecion_already_exists:
+            new_connection = Connection([city1, city2], isFlight)
+
+            city1.connections.append(new_connection)
+            city2.connections.append(new_connection)
+            self.all_connections.append(new_connection)
