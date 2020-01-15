@@ -61,3 +61,12 @@ class Game:
             city1.connections.append(new_connection)
             city2.connections.append(new_connection)
             self.all_connections.append(new_connection)
+
+    # debug: list number of connections for each city to check if all added
+    def check_conn_number(self):
+        for x in "ABCDEFGHJK":
+            for y in range(1, 7):
+                cs = self.get_cities_by_coordinate(x, str(y))
+                for c in cs:
+                    print(c.name, len(c.connections))
+                    input()
