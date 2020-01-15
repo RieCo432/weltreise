@@ -1,3 +1,5 @@
+import math
+
 from connection import Connection
 
 class Game:
@@ -33,7 +35,7 @@ class Game:
 
     def add_connection(self, cities, isFlight=False):
 
-        print(cities)
+        # print(cities)
         city1 = self.get_city_by_name(cities[0])
         city2 = self.get_city_by_name(cities[1])
 
@@ -70,3 +72,18 @@ class Game:
                 for c in cs:
                     print(c.name, len(c.connections))
                     input()
+
+
+    @staticmethod
+    # used as heuristic for a-star
+    def estimate_city_dist(c1, c2):
+        letter_list = "abcdefghjk"
+        c1x = abs(5-letter_list.index(c1.x))
+        c1y = int(c1.y)
+        c2x = abs(5-letter_list.index(c2.x))
+        c2y = int(c2.y)
+
+        coord_dist = math.sqrt((c1x-c2x)**2 + (c1y-c2y)**2)
+
+        return 1 + round(coord_dist * math.sqrt(2))
+

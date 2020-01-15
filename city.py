@@ -1,4 +1,4 @@
-from copy import deepcopy
+from copy import deepcopy, copy
 from path import Path
 
 
@@ -27,29 +27,29 @@ class City:
 
     def get_possible_destinations(self, number_of_moves):
 
-        new_paths = [Path([self])]
+        current_path = Path([self])
+
+        valid_paths = [[current_path]]
+
         for i in range(number_of_moves):
-            paths = deepcopy(new_paths)
-            new_paths = []
-            for path in paths:
-                last_city = path.cities_in_order[-1]
-                possible_next_cities = last_city.get_adjacent_cities()
-                for c in possible_next_cities:
-                    new_path_cities = deepcopy(path.cities_in_order)
-                    new_path_cities.append(c)
-                    new_paths.append(Path(new_path_cities))
+            valid_paths.append([])
+            for old_path in valid_paths[i]:
+                for next_city in old_path.cities_in_order[-1].get_adjacent_cities():
+                    old_path_cities = []
+                    for city in old_path.cities_in_order:
+                        old_path_cities.append(city)
+                    old_path_cities.append(next_city)
+                    new_path = Path(old_path_cities)
+                    if new_path.is_valid():
+                        valid_paths[i+1].append(new_path)
 
-        valid_paths = []
 
-        for path in new_paths:
-            if path.is_valid:
-                valid_paths.append(path)
 
         possible_destinations = []
 
-        for path in valid_paths:
-            if path.cities_in_order[-1] not in possible_destinations:
-                possible_destinations.append(path.cities_in_order[-1])
+        for path in valid_paths[-1]:
+            if path.cities_in_order[-1].name not in possible_destinations:
+                possible_destinations.append(path.cities_in_order[-1].name)
 
         return possible_destinations
 

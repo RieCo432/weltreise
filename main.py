@@ -562,7 +562,14 @@ if __name__ == "__main__":
 
     # results = game.get_city_by_name("LosAngeles").get_adjacent_cities()
     #
-    # result = game.get_city_by_name("LosAngeles").get_possible_destinations(3)
+    # all_reachable = True
+    # for city in game.all_cities:
+    #     print(city.name)
+    #     result = city.get_possible_destinations(12)
+    #     all_reachable &= len(result) == 173
+    #     if not all_reachable:
+    #         break
+    # print(all_reachable)
     #
     # la = game.get_city_by_name("LosAngeles")
     # sf = game.get_city_by_name("SanFrancisco")
@@ -579,6 +586,8 @@ if __name__ == "__main__":
     # print(p4.is_valid())
 
     # game.check_conn_number()
+
+    print(game.estimate_city_dist(game.get_city_by_name("Fairbanks"), game.get_city_by_name("Wellington")))
 
 
     print("Test concluded")
